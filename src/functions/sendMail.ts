@@ -1,4 +1,5 @@
-import { SendEmailCommand } from "@aws-sdk/client-ses"
+import { SendEmailCommand } from "@aws-sdk/client-ses";
+import { sesClient } from "../clients/sesClient.js";
 
 export async function handler() {
   const sendEmailCommand = new SendEmailCommand({
@@ -20,10 +21,12 @@ export async function handler() {
         Html: {
           Charset: 'UTF-8',
           Data: '<h1> Oi Tobias </h1>, acabamos de receber o seu pedido! <strong>Ele será enviado em breve.</strong>'
-        }
-      }
+        },
+      },
     },
-  })
+  });
+
+  await sesClient.send(sendEmailCommand)
 
   return {
     statusCode: 200,
