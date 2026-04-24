@@ -1,6 +1,4 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: tobiastac
-# "service" is the name of this project. This will also be added to your AWS resource names.
 service: mailer
 
 provider:
@@ -8,6 +6,13 @@ provider:
   runtime: nodejs20.x
   architecture: arm64
   region: sa-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ses:SendEmail
+          Resource: '*'
 
 build:
   esbuild:
